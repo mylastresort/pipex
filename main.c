@@ -6,7 +6,7 @@
 /*   By: stamim <stamim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 19:04:41 by stamim            #+#    #+#             */
-/*   Updated: 2022/03/29 14:31:46 by stamim           ###   ########.fr       */
+/*   Updated: 2022/03/29 15:05:57 by stamim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,13 @@ int	main(int ac, char *av[], char *env[])
 		if (pipe(heredoc_pipe) == -1)
 			return (failure("pipe"));
 		p = (t_pipe){(size_t)(ac - 5), heredoc_pipe[R_END],
-			open(av[ac - 1], O_CREAT | O_WRONLY | O_APPEND, 0664)};
+			open(av[ac - 1], O_CREAT | O_WRONLY | O_APPEND, 0664), true};
 		wait_for_heredoc(heredoc_pipe[W_END], av[2]);
 	}
 	else
 	{
 		p = (t_pipe){(size_t)(ac - 4), open(av[1], O_RDONLY),
-			open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0664)};
+			open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0664), false};
 		if (p.input == -1)
 			return (failure(av[1]));
 	}
